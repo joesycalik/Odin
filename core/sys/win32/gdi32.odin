@@ -9,6 +9,19 @@ BLACKNESS :: 0x00000042;
 @(default_calling_convention = "std")
 foreign gdi32 {
 	@(link_name="GetStockObject") get_stock_object :: proc(fn_object: i32) -> Hgdiobj ---;
+	
+	@(link_name="PatBlt") pat_blt :: proc(hdc: Hdc, x, y, w, h: i32, rop: u32) -> Bool ---;
+	
+	@(link_name="CreateCompatibleDC") create_compatible_dc :: proc(hdc: Hdc) -> Hdc ---;
+	@(link_name="DeleteObject")       delete_object        :: proc(ho: Hgdiobj) -> Bool ---;
+	
+	@(link_name="CreateDIBSection") 
+	create_dib_section :: proc(hdc: Hdc, 
+							   pbmi: ^Bitmap_Info, 
+							   usage: u32, 
+							   ppvBits: rawptr,
+							   hSection: Handle,
+							   offset: u32) -> Hbitmap ---;
 
 	@(link_name="StretchDIBits")
 	stretch_dibits :: proc(hdc: Hdc,
@@ -22,5 +35,4 @@ foreign gdi32 {
 	@(link_name="ChoosePixelFormat") choose_pixel_format :: proc(hdc: Hdc, pfd: ^Pixel_Format_Descriptor) -> i32 ---;
 	@(link_name="SwapBuffers")       swap_buffers        :: proc(hdc: Hdc) -> Bool ---;
 
-	@(link_name="PatBlt") pat_blt :: proc(hdc: Hdc, x, y, w, h: i32, rop: u32) -> Bool ---;
 }
